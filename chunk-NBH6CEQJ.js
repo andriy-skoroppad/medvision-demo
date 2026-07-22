@@ -1,0 +1,1 @@
+var t=(e=>(e.MAX="MAX",e.MIN="MIN",e))(t||{}),n=(e=>(e.QUICK="QUICK",e.HTML="HTML",e))(n||{}),i=(e=>(e.SETTINGS="SETTINGS",e.STORAGE="STORAGE",e))(i||{}),s=(e=>(e.ANY="ANY",e.PREVIOUS="PREVIOUS",e))(s||{}),r=[5,10,15,20,30,60];export{t as a,n as b,i as c,s as d,r as e};
