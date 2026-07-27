@@ -1,0 +1,1 @@
+var r=(t=>(t.OPTICS="OPTICS",t.CL="CL",t))(r||{});var n=(e=>(e.STORAGE_COLOR="STORAGE_COLOR",e.STORAGE_ALL_COLORS="STORAGE_ALL_COLORS",e.ALL_STORAGES_AND_GLOBAL="ALL_STORAGES_AND_GLOBAL",e))(n||{});export{r as a,n as b};
