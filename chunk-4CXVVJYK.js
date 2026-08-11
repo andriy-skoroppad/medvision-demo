@@ -1,1 +1,0 @@
-import{a as o}from"./chunk-366TCO6T.js";import"./chunk-NT7H5TJM.js";import"./chunk-WR2S7BJ3.js";import"./chunk-LG5BBLMY.js";import"./chunk-YRGD3QW5.js";import"./chunk-7CGTOI24.js";var e=[{path:"",providers:[o],loadComponent:()=>import("./chunk-DY5DKC6N.js").then(t=>t.DiscountProgramsPageComponent)}];export{e as LOYALTY_ROUTES};
