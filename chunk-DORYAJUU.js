@@ -1,1 +1,0 @@
-import{g as t}from"./chunk-IANFJKWG.js";import{h as o}from"./chunk-4ISPFCJU.js";import{$ as r,p as e}from"./chunk-PCXJIBWJ.js";function A(i){return()=>{let n=r(t),a=r(o);return n.canAccess$(i).pipe(e(c=>c?!0:a.createUrlTree(["/dashboard"])))}}export{A as a};
