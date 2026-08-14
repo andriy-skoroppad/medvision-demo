@@ -1,1 +1,0 @@
-import"./chunk-7CGTOI24.js";var t=[{path:"",loadComponent:()=>import("./chunk-YB2QQ7ZQ.js").then(o=>o.BookingSettingsPageComponent)},{path:"journal",loadComponent:()=>import("./chunk-5WRUEILC.js").then(o=>o.BookingJournalPageComponent)}];export{t as ONLINE_BOOKING_ROUTES};
