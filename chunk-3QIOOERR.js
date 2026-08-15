@@ -1,0 +1,1 @@
+import{I as i,Lc as t,ta as d,u as o}from"./chunk-7MNSWTHZ.js";function p(){let n=d(0),a=()=>n.update(e=>e+1),r=()=>n.update(e=>Math.max(0,e-1));return{loading:t(()=>n()>0),track:e=>o(()=>(a(),e)).pipe(i(r)),begin:a,end:r}}export{p as a};
