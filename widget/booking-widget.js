@@ -10,7 +10,9 @@
  *    малює кнопку «Записатися» (у місці вставки або плаваючу в куті) і відкриває
  *    сторінку запису в модальному вікні поверх сайту;
  *  - для `<iframe data-medvision-booking>` — «авто по висоті»: сторінка запису
- *    повідомляє висоту вмісту, рамка підлаштовується;
+ *    повідомляє висоту вмісту, рамка плавно підлаштовується; модальне вікно запису
+ *    натомість має сталу висоту (кроки не смикають його), лише вікно «Передзвоніть
+ *    мені» підганяється під коротку форму;
  *  - запис створено → подія `medvision:booked` на `window` сайту
  *    (`event.detail = { code, pageKey }`);
  *  - `data-widget="callback"` (T9.1.6) — той самий віджет, але у вікні форма
@@ -47,8 +49,17 @@
         var frame = frames[i];
         if (frame.contentWindow !== event.source) continue;
         if (new URL(frame.src, location.href).origin !== event.origin) return;
-        if (data.type === 'height' && !frame.hasAttribute('data-medvision-modal') && data.height > 0) {
-          frame.style.height = Math.ceil(data.height) + 'px';
+        if (data.type === 'height' && data.height > 0) {
+          if (!frame.hasAttribute('data-medvision-modal')) {
+            // Рамка на сторінці — плавно підлаштовується під вміст.
+            frame.style.transition = 'height .25s ease';
+            frame.style.height = Math.ceil(data.height) + 'px';
+          } else if (frame.hasAttribute('data-medvision-fit') && !window.matchMedia('(max-width: 600px)').matches) {
+            // Лише вікно «Передзвоніть мені» — за висотою короткої форми, плавно. Вікно запису має сталу
+            // висоту на всіх кроках (2026-11-02: зміна висоти між кроками виглядала як «зіскакування»).
+            frame.parentNode.style.transition = 'height .25s ease';
+            frame.parentNode.style.height = Math.ceil(data.height) + 'px';
+          }
         }
         if (data.type === 'booked') {
           window.dispatchEvent(
@@ -133,8 +144,11 @@
       'background:rgba(0,0,0,.5);padding:' + (narrow ? '0' : '16px') + ';box-sizing:border-box';
 
     var box = document.createElement('div');
+    // Вікно запису — стала висота (720px або скільки є екрана): кроки різної довжини не смикають рамку,
+    // довший крок прокручується всередині. «Передзвоніть мені» — за висотою форми (див. обробник `height`).
     box.style.cssText =
-      'position:relative;width:100%;max-width:760px;height:100%;max-height:' + (narrow ? 'none' : callback ? '640px' : '900px') +
+      'position:relative;width:100%;max-width:760px;height:' + (narrow ? '100%' : callback ? '100%' : 'min(720px, 100%)') +
+      ';min-height:' + (narrow ? '0' : '220px') + ';max-height:' + (narrow ? 'none' : callback ? '640px' : '100%') +
       ';background:#fff;border-radius:' + (narrow ? '0' : '8px') + ';overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.3)';
 
     var close = document.createElement('button');
@@ -150,6 +164,7 @@
     frame.title = label;
     frame.setAttribute('data-medvision-booking', pageKey);
     frame.setAttribute('data-medvision-modal', '');
+    if (callback) frame.setAttribute('data-medvision-fit', '');
     frame.style.cssText = 'display:block;width:100%;height:100%;border:0';
     registry.frames.push(frame);
 
